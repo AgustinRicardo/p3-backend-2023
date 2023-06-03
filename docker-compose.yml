@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  practicadb:
+    image: postgres
+    container_name: practicadb
+    restart: always
+    environment:
+      - POSTGRES_USER=user_practica
+      - POSTGRES_PASSWORD=password1234
+      - POSTGRES_DB=practicadb
+    ports:
+      - 5432:5432
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+volumes:
+  dbdata: 

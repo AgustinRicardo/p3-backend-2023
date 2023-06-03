@@ -6,3 +6,32 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model RoadDirection {
+  id        Int      @id @default(autoincrement())
+  direction String   @unique
+  createdAt DateTime @default(now())
+  roads     Road[]
+}
+
+model Road {
+  id              Int           @id @default(autoincrement())
+  name            String        @unique
+  roadDirectionId Int
+  roadDirection   RoadDirection @relation(fields: [roadDirectionId], references: [id])
+  roadElements    RoadElement[]
+  workers         Worker[]
+}
+
+model RoadElement {
+  id     Int    @id @default(autoincrement())  
+  code   String @unique
+  roadId Int
+  road   Road   @relation(fields: [roadId], references: [id])
+}
+
+model Worker {
+  id    Int    @id @default(autoincrement())
+  name  String
+  roads Road[]
+}
