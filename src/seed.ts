@@ -2,7 +2,11 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-const roadDirections = await prisma.roadDirection.createMany({
+await prisma.road.deleteMany({});
+await prisma.roadDirection.deleteMany({});
+await prisma.worker.deleteMany({});
+
+await prisma.roadDirection.createMany({
   data: [
     { direction: "West" },
     { direction: "East" },
@@ -11,7 +15,7 @@ const roadDirections = await prisma.roadDirection.createMany({
   ],
 });
 
-console.log(`Road directions created ${roadDirections}`);
+console.log('RoadDirections created');
 
 const westDirection = await prisma.roadDirection.findFirst({
   where: { direction: { equals: 'West' } },
@@ -30,6 +34,8 @@ const road1 = await prisma.road.create({
   },
 });
 
+console.log(`Road ${road1.id} ${road1.name} created with workers`);
+
 const workerAgustin = await prisma.worker.findFirstOrThrow({
   where: { name: { equals: "Agustín" }, lastName: "Rodríguez" },
 });
@@ -45,14 +51,4 @@ const road2 = await prisma.road.create({
   },
 });
 
-const eastDirection = await prisma.roadDirection.findFirst({
-  where: { direction: { equals: "East " } },
-});
-
-const northDirection = await prisma.roadDirection.findFirst({
-  where: { direction: { equals: "North " } },
-});
-
-const southDirection = await prisma.roadDirection.findFirst({
-  where: { direction: { equals: "South " } },
-});
+console.log(`Road ${road2.id} ${road2.name} created with workers`);
