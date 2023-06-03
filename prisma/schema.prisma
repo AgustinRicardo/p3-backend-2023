@@ -24,14 +24,15 @@ model Road {
 }
 
 model RoadElement {
-  id     Int    @id @default(autoincrement())  
+  id     Int    @id @default(autoincrement())
   code   String @unique
   roadId Int
   road   Road   @relation(fields: [roadId], references: [id])
 }
 
 model Worker {
-  id    Int    @id @default(autoincrement())
-  name  String
-  roads Road[]
+  id       Int     @id @default(autoincrement())
+  name     String
+  lastName String?
+  roads    Road[]
 }
