@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import roadsRouter from './roads.js';
 import roadDirectionRouter from './road-directions.js'
 import roadElementRouter from './road-elements.js'
+import wworkerRouter from './workers.js'
 import { defaultErrorHandler } from "./utils.js";
 
 dotenv.config();
@@ -18,6 +19,7 @@ app.use(morgan("dev"));
 app.use("/roads", roadsRouter);
 app.use("/roadDirections", roadDirectionRouter);
 app.use("/roadElements", roadElementRouter);
+app.use("/workers", wworkerRouter)
 
 app.use(defaultErrorHandler)
 
