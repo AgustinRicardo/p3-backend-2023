@@ -31,10 +31,10 @@ router.post(
       });
 
       const createdRoad = await prisma.worker.create({
-        data: { ...req.body },
+        data: { ...req.body, },
       });
       res.status(200).json(createdRoad);
     })
-  );
+);
 
 export default router;

@@ -4,6 +4,7 @@ import cors from "cors";
 import morgan from "morgan";
 import dotenv from "dotenv";
 import roadsRouter from './roads.js';
+import roadDirectionRouter from './road-directions.js'
 import { defaultErrorHandler } from "./utils.js";
 
 dotenv.config();
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use(morgan("dev"));
 
 app.use("/roads", roadsRouter);
+app.use("/roadDirections", roadDirectionRouter);
 
 app.use(defaultErrorHandler)
 
