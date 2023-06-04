@@ -1,7 +1,7 @@
 import { Router } from "express";
 import prisma from "./prisma-client.js";
 import { errorChecked } from "./utils.js";
-import workersRouter from "./road-workers.js";
+import roadWorkersRouter from "./road-workers.js";
 
 const router = Router();
 
@@ -60,6 +60,6 @@ router.delete(
   })
 );
 
-router.use("/:id/workers", workersRouter);
+router.use("/:id/workers", roadWorkersRouter);
 
 export default router;

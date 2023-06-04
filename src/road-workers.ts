@@ -21,7 +21,7 @@ router.get(
   })
 );
 
-router.post(
+/*router.post(
     "/",
     errorChecked(async (req, res) => {
       const id  = req.params.id;
@@ -30,11 +30,18 @@ router.post(
         where: { id: Number(id)}
       });
 
-      const createdRoad = await prisma.worker.create({
+      const createdWorker = await prisma.worker.create({
         data: { ...req.body, },
+      });
+
+      const updatedWorker = await prisma.worker.update({
+        where: { id: createdWorker.id },
+        data: { roads:   }
+        
+        
       });
       res.status(200).json(createdRoad);
     })
-);
+);*/
 
 export default router;
