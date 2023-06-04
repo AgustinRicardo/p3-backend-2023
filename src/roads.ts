@@ -1,42 +1,62 @@
 import { Router } from "express";
-import prisma from './prisma-client.js'
+import prisma from "./prisma-client.js";
+import { errorChecked } from "./utils.js";
 
 const router = Router();
 
-router.get("/", async (req, res) => {
-    try {
-      const roads = await prisma.road.findMany({});
-      res.status(200).json(roads);
-    } catch (e) {
-      res.status(500).json({ 
-          type: e.constructor.name, 
-          message: e.toString() 
-      });
-    }
-  });
+router.get(
+  "/",
+  errorChecked(async (req, res) => {
+    const roads = await prisma.road.findMany({});
+    res.status(200).json(roads);
+  })
+);
 
-router.get("/:id", async (req, res) => {
+router.get(
+  "/:id",
+  errorChecked(async (req, res) => {
     const { id } = req.params;
-    try {
-      const road = await prisma.road.findUnique({
-        where: {
-            id: Number(id)
-        },
-      });
-      
-      if (road === null){
-        return res.status(404).json({
-            error: `Road with id ${id} was not found`
-        });
-      }
+    const road = await prisma.road.findUniqueOrThrow({
+      where: {
+        id: Number(id),
+      },
+    });
+    res.status(200).json({ road });
+  })
+);
 
-      res.status(200).json({road});
-    } catch (e) {
-      res.status(500).json({ 
-          type: e.constructor.name, 
-          message: e.toString() 
-      });
-    }
-  });
+router.put(
+  "/:id",
+  errorChecked(async (req, res) => {
+    const { id } = req.params;
+    const updateRoad = await prisma.road.update({
+      where: { id: Number(id) },
+      data: req.body,
+    });
+    res.status(200).json(updateRoad);
+  })
+);
+
+router.post(
+  "/",
+  errorChecked(async (req, res) => {
+    const createdRoad = await prisma.road.create({
+      data: req.body,
+    });
+    res.status(200).json(createdRoad);
+  })
+);
+
+router.delete(
+  "/:id",
+  errorChecked(async (req, res) => {
+    const { id } = req.params;
+    const deletedRoad = await prisma.road.delete({
+      where: { id: Number(id) },
+    });
+
+    res.status(200).json(deletedRoad);
+  })
+);
 
 export default router;
