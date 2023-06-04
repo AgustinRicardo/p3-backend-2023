@@ -7,7 +7,7 @@ const router = Router();
 router.get(
   "/",
   errorChecked(async (req, res) => {
-    const roads = await prisma.roadDirection.findMany({});
+    const roads = await prisma.roadElement.findMany({});
     res.status(200).json(roads);
   })
 );
@@ -16,7 +16,7 @@ router.get(
   "/:id",
   errorChecked(async (req, res) => {
     const { id } = req.params;
-    const road = await prisma.roadDirection.findUniqueOrThrow({
+    const road = await prisma.roadElement.findUniqueOrThrow({
       where: {
         id: Number(id),
       },
@@ -25,11 +25,21 @@ router.get(
   })
 );
 
+router.post(
+  "/",
+  errorChecked(async (req, res) => {
+    const createdRoad = await prisma.roadElement.create({
+      data: req.body,
+    });
+    res.status(200).json(createdRoad);
+  })
+);
+
 router.put(
   "/:id",
   errorChecked(async (req, res) => {
     const { id } = req.params;
-    const updateRoad = await prisma.roadDirection.update({
+    const updateRoad = await prisma.roadElement.update({
       where: { id: Number(id) },
       data: req.body,
     });
@@ -37,21 +47,11 @@ router.put(
   })
 );
 
-router.post(
-  "/",
-  errorChecked(async (req, res) => {
-    const createdRoad = await prisma.roadDirection.create({
-      data: req.body,
-    });
-    res.status(200).json(createdRoad);
-  })
-);
-
 router.delete(
   "/:id",
   errorChecked(async (req, res) => {
     const { id } = req.params;
-    const deletedRoad = await prisma.roadDirection.delete({
+    const deletedRoad = await prisma.roadElement.delete({
       where: { id: Number(id) },
     });
 
