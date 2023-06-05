@@ -21,4 +21,22 @@ router.get(
     })
 );
 
+router.post(
+    "/",
+    errorChecked(async (req, res) => {
+      const id  = req.params.id;
+
+      const createdRoad = await prisma.road.create({
+        data: { 
+          ...req.body,
+          workers: {
+            connect: [{ id: Number(id) }],
+          }
+         },
+      });
+
+      res.status(200).json(createdRoad);
+    })
+);
+
 export default router;

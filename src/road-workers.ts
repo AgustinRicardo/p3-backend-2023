@@ -21,27 +21,22 @@ router.get(
   })
 );
 
-/*router.post(
-    "/",
-    errorChecked(async (req, res) => {
-      const id  = req.params.id;
+router.post(
+  "/",
+  errorChecked(async (req, res) => {
+    const id  = req.params.id;
 
-      const road = await prisma.road.findFirstOrThrow({
-        where: { id: Number(id)}
-      });
+    const createdRoad = await prisma.worker.create({
+      data: { 
+        ...req.body,
+        roads: {
+          connect: [{ id: Number(id) }],
+        }
+       },
+    });
 
-      const createdWorker = await prisma.worker.create({
-        data: { ...req.body, },
-      });
-
-      const updatedWorker = await prisma.worker.update({
-        where: { id: createdWorker.id },
-        data: { roads:   }
-        
-        
-      });
-      res.status(200).json(createdRoad);
-    })
-);*/
+    res.status(200).json(createdRoad);
+  })
+);
 
 export default router;
